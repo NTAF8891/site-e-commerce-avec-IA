@@ -1,15 +1,30 @@
 const getApiUrl = () => {
+  // URL de secours si la variable d'environnement est mal configurée
+  const FALLBACK_PROD_URL = 'https://mon-backend-shop.onrender.com/api'
+  
   let url = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL)
     ? import.meta.env.VITE_API_URL
     : 'http://localhost:8080/api'
+  
+  // Si l'URL contient le placeholder par défaut (erreur fréquente), on force la bonne URL
+  if (url.includes('votre-backend-url')) {
+    console.warn('VITE_API_URL est mal configuré (placeholder détecté). Utilisation de l\'URL de secours:', FALLBACK_PROD_URL)
+    url = FALLBACK_PROD_URL
+  }
   
   if (url.endsWith('/')) {
     url = url.slice(0, -1)
   }
   
   if (!url.endsWith('/api')) {
-    url = url + '/api'
+    url = `${url}/api`
   }
+  
+  // Eviter le double /api/api
+  if (url.endsWith('/api/api')) {
+    url = url.replace('/api/api', '/api')
+  }
+  
   return url
 }
 
