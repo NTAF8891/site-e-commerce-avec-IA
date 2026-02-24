@@ -5,7 +5,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { useCart } from '../CartContext.jsx'
 import { createOrder, createPaymentIntent } from '../api.js'
 
-const stripePromise = loadStripe('pk_test_remplace_toi_meme')
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY || 'pk_test_remplace_toi_meme')
 
 function CheckoutForm({ clientSecret, onSuccess }) {
   const stripe = useStripe()
