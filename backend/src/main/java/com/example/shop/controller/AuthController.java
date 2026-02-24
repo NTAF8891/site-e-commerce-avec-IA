@@ -37,6 +37,7 @@ public class AuthController {
             res.lastName = u.getLastName();
             return ResponseEntity.ok(res);
         } catch (Exception e) {
+            System.err.println("ERREUR INSCRIPTION: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.internalServerError().body(java.util.Map.of("error", "Erreur lors de l'inscription: " + e.getMessage()));
         }
