@@ -1,0 +1,45 @@
+services:
+  # Backend (Spring Boot)
+  - type: web
+    name: backend
+    runtime: docker
+    repo: https://github.com/NTAF8891/site-e-commerce-avec-IA
+    rootDir: backend
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: DB_URL
+        fromDatabase:
+          name: shop-db
+          property: connectionString
+      - key: DB_USERNAME
+        fromDatabase:
+          name: shop-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: shop-db
+          property: password
+      - key: STRIPE_SECRET_KEY
+        sync: false
+
+  # Frontend (React/Vite)
+  - type: static
+    name: frontend
+    runtime: node
+    repo: https://github.com/NTAF8891/site-e-commerce-avec-IA
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: backend
+          property: url
+
+databases:
+  - name: shop-db
+    plan: free
+    databaseName: shop
+    user: shop_user

@@ -1,6 +1,19 @@
-const API_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL)
-  ? import.meta.env.VITE_API_URL
-  : 'http://localhost:8080/api'
+const getApiUrl = () => {
+  let url = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL)
+    ? import.meta.env.VITE_API_URL
+    : 'http://localhost:8080/api'
+  
+  if (url.endsWith('/')) {
+    url = url.slice(0, -1)
+  }
+  
+  if (!url.endsWith('/api')) {
+    url = url + '/api'
+  }
+  return url
+}
+
+const API_URL = getApiUrl()
 
 async function request(path, options = {}) {
   const res = await fetch(API_URL + path, {

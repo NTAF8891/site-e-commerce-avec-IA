@@ -13,7 +13,10 @@ FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 # Copier le JAR depuis l'étape de build
 COPY --from=build /app/target/*.jar app.jar
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
+
 # Exposer le port 8080
 EXPOSE 8080
-# Commande de démarrage
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Commande de démarrage via le script
+ENTRYPOINT ["./entrypoint.sh"]
