@@ -23,6 +23,11 @@ public class ProductController {
         return productService.list();
     }
 
+    @GetMapping("/{id}")
+    public Product getById(@PathVariable Long id) {
+        return productService.findById(id);
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(consumes = {"multipart/form-data"})
     public Product create(@RequestPart("product") Product product, @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {

@@ -30,6 +30,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public Product findById(Long id) {
+        return productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Produit non trouvé: " + id));
+    }
+
     public void delete(Long id) {
         productRepository.deleteById(id);
     }

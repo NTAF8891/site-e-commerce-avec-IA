@@ -6,6 +6,7 @@ import Products from './pages/Products.jsx'
 import Cart from './pages/Cart.jsx'
 import Checkout from './pages/Checkout.jsx'
 import Orders from './pages/Orders.jsx'
+import ProductDetails from './pages/ProductDetails.jsx'
 import { useCart } from './CartContext.jsx'
 
 function Navbar({ token, user, onLogout }) {
@@ -112,6 +113,7 @@ export default function App() {
       <main className="app-main">
         <Routes>
           <Route path="/" element={<Products token={token} />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/login" element={<Login onAuth={handleAuth} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart token={token} />} />

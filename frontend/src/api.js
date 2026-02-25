@@ -59,6 +59,10 @@ export function getProducts() {
   return request('/products', { method: 'GET' })
 }
 
+export function getProduct(id) {
+  return request(`/products/${id}`, { method: 'GET' })
+}
+
 export function createOrder(items, token) {
   return request('/orders', { method: 'POST', body: { items }, token })
 }
