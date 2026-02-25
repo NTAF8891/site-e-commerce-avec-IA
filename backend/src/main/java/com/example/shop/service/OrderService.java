@@ -69,5 +69,12 @@ public class OrderService {
         return orderRepository.findByUserIdOrderByCreatedAtDesc(userId);
     }
 
+    @Transactional
+    public void markCancelled(Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow();
+        order.setStatus(OrderStatus.CANCELLED);
+        orderRepository.save(order);
+    }
+
     public record Item(Long productId, Integer quantity) {}
 }
