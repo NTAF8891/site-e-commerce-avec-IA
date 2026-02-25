@@ -44,13 +44,18 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<OrderDtos.OrderResponse>> getUserOrders(Authentication auth) {
-        Long userId = userRepository.findByEmail(auth.getName()).orElseThrow().getId();
-        List<Order> orders = orderService.getOrdersByUser(userId);
-        List<OrderDtos.OrderResponse> res = orders.stream()
-                .map(this::mapToDto)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(res);
+    public ResponseEntity<?> getUserOrders(Authentication auth) {
+        try {
+            Long userId = userRepository.findByEmail(auth.getName()).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+            List<Order> orders = orderService.getOrdersByUser(userId);
+            List<OrderDtos.OrderResponse> res = orders.stream()
+                    .map(this::mapToDto)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Erreur lors de la récupération des commandes: " + e.getMessage());
+        }
     }
 
     private OrderDtos.OrderResponse mapToDto(Order order) {
