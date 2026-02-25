@@ -17,4 +17,18 @@ public class OrderDtos {
     public static class CreatePaymentIntentResponse {
         public String clientSecret;
     }
+
+    public static class OrderResponse {
+        public Long id;
+        public Double totalAmount;
+        public String status;
+        public String createdAt;
+        public List<OrderItemDto> items;
+    }
+
+    public static class OrderItemDto {
+        public String productName;
+        public Integer quantity;
+        public Double price;
+    }
 }

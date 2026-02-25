@@ -42,4 +42,32 @@ public class OrderController {
         res.clientSecret = clientSecret;
         return ResponseEntity.ok(res);
     }
+
+    @GetMapping
+    public ResponseEntity<List<OrderDtos.OrderResponse>> getUserOrders(Authentication auth) {
+        Long userId = userRepository.findByEmail(auth.getName()).orElseThrow().getId();
+        List<Order> orders = orderService.getOrdersByUser(userId);
+        List<OrderDtos.OrderResponse> res = orders.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(res);
+    }
+
+    private OrderDtos.OrderResponse mapToDto(Order order) {
+        OrderDtos.OrderResponse dto = new OrderDtos.OrderResponse();
+        dto.id = order.getId();
+        dto.totalAmount = order.getTotalAmount();
+        dto.status = order.getStatus().name();
+        dto.createdAt = order.getCreatedAt().toString();
+        dto.items = order.getItems().stream()
+                .map(i -> {
+                    OrderDtos.OrderItemDto itemDto = new OrderDtos.OrderItemDto();
+                    itemDto.productName = i.getProduct().getName();
+                    itemDto.quantity = i.getQuantity();
+                    itemDto.price = i.getPrice();
+                    return itemDto;
+                })
+                .collect(Collectors.toList());
+        return dto;
+    }
 }

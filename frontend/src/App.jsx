@@ -5,6 +5,7 @@ import Register from './pages/Register.jsx'
 import Products from './pages/Products.jsx'
 import Cart from './pages/Cart.jsx'
 import Checkout from './pages/Checkout.jsx'
+import Orders from './pages/Orders.jsx'
 import { useCart } from './CartContext.jsx'
 
 function Navbar({ token, user, onLogout }) {
@@ -23,6 +24,9 @@ function Navbar({ token, user, onLogout }) {
             <Link to="/cart" className={`nav-link${isActive('/cart') ? ' pill' : ''}`}>
               Panier {cartCount > 0 && <span className="cart-badge">({cartCount})</span>}
             </Link>
+            {token && (
+              <Link to="/orders" className={`nav-link${isActive('/orders') ? ' pill' : ''}`}>Mes Commandes</Link>
+            )}
           </div>
         </div>
         <div className="nav-actions">
@@ -109,9 +113,10 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Products token={token} />} />
           <Route path="/login" element={<Login onAuth={handleAuth} />} />
-          <Route path="/register" element={<Register onAuth={handleAuth} />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/cart" element={<Cart token={token} />} />
           <Route path="/checkout" element={<Checkout token={token} />} />
+          <Route path="/orders" element={<Orders token={token} />} />
         </Routes>
       </main>
     </div>

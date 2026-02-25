@@ -33,14 +33,15 @@ public class OrderService {
         order = orderRepository.save(order);
         double total = 0d;
         for (Item it : items) {
-            Product p = productRepository.findById(it.productId()).orElseThrow();
+            Product p = productRepository.findById(it.productId).orElseThrow();
             OrderItem oi = new OrderItem();
             oi.setOrder(order);
             oi.setProduct(p);
-            oi.setQuantity(it.quantity());
+            oi.setQuantity(it.quantity);
             oi.setPrice(p.getPrice());
             order.getItems().add(oi);
-            total += p.getPrice() * it.quantity();
+            orderItemRepository.save(oi);
+            total += p.getPrice() * it.quantity;
         }
         order.setTotalAmount(total);
         order = orderRepository.save(order);
@@ -51,20 +52,21 @@ public class OrderService {
     public void markPaidAndDecreaseStock(Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow();
         if (order.getStatus() == OrderStatus.PAID) return;
+        
         for (OrderItem oi : order.getItems()) {
             Product p = oi.getProduct();
-            p.setStock(Math.max(0, p.getStock() - oi.getQuantity()));
+            int newStock = Math.max(0, p.getStock() - oi.getQuantity());
+            p.setStock(newStock);
             productRepository.save(p);
         }
+        
         order.setStatus(OrderStatus.PAID);
         orderRepository.save(order);
     }
 
-    @Transactional
-    public void markCancelled(Long orderId) {
-        Order order = orderRepository.findById(orderId).orElseThrow();
-        order.setStatus(OrderStatus.CANCELLED);
-        orderRepository.save(order);
+    @Transactional(readOnly = true)
+    public List<Order> getOrdersByUser(Long userId) {
+        return orderRepository.findByUserIdOrderByCreatedAtDesc(userId);
     }
 
     public record Item(Long productId, Integer quantity) {}

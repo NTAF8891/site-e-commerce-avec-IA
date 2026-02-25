@@ -66,3 +66,7 @@ export function createOrder(items, token) {
 export function createPaymentIntent(orderId, currency, token) {
   return request('/orders/payment-intent', { method: 'POST', body: { orderId, currency }, token })
 }
+
+export function getUserOrders(token) {
+  return request('/orders', { method: 'GET', token })
+}

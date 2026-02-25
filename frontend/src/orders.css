@@ -1,0 +1,155 @@
+.orders-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.orders-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.orders-message {
+  text-align: center;
+  color: #6b7280;
+  font-size: 16px;
+  margin-top: 48px;
+}
+
+.orders-error {
+  text-align: center;
+  color: #ef4444;
+  background: #fee2e2;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.orders-empty {
+  text-align: center;
+  color: #6b7280;
+  font-size: 16px;
+  padding: 48px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.order-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.order-header {
+  padding: 20px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.order-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.order-id {
+  font-weight: 600;
+  color: #111827;
+  font-size: 16px;
+}
+
+.order-date {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.order-status-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.order-status {
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-paid {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.status-cancelled {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.order-total {
+  font-weight: 700;
+  font-size: 18px;
+  color: #111827;
+}
+
+.order-items {
+  padding: 20px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.order-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.order-item:first-child {
+  padding-top: 0;
+}
+
+.item-quantity {
+  font-weight: 600;
+  color: #6b7280;
+  width: 40px;
+}
+
+.item-name {
+  flex: 1;
+  color: #374151;
+  font-weight: 500;
+}
+
+.item-price {
+  font-weight: 600;
+  color: #111827;
+}
