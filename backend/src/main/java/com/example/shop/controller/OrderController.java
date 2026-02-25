@@ -46,7 +46,7 @@ public class OrderController {
     @GetMapping
     public ResponseEntity<?> getUserOrders(Authentication auth) {
         try {
-            Long userId = userRepository.findByEmail(auth.getName()).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+            Long userId = userRepository.findByEmail(auth.getName()).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé")).getId();
             List<Order> orders = orderService.getOrdersByUser(userId);
             List<OrderDtos.OrderResponse> res = orders.stream()
                     .map(this::mapToDto)
