@@ -18,7 +18,7 @@ spring:
 security:
   jwt:
     secret: ${JWT_SECRET:5f2c0d4a7b9c1e3f5a7c9d1e3f5a7c9d5f2c0d4a7b9c1e3f5a7c9d1e3f5a7c9d}
-    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+    expiration-ms: ${JWT_EXPIRATION_MS:1800000}
 
 stripe:
   secret-key: ${STRIPE_SECRET_KEY:}

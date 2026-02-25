@@ -75,6 +75,33 @@ export default function App() {
     navigate('/')
   }
 
+  // Gestion de l'inactivité (30 min)
+  useEffect(() => {
+    if (!token) return
+
+    const INACTIVITY_LIMIT = 30 * 60 * 1000 // 30 minutes
+    let timeoutId
+
+    const resetTimer = () => {
+      if (timeoutId) clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => {
+        alert("Vous avez été déconnecté après 30 minutes d'inactivité.")
+        handleLogout()
+      }, INACTIVITY_LIMIT)
+    }
+
+    // Événements à surveiller
+    const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart']
+    events.forEach(event => window.addEventListener(event, resetTimer))
+
+    resetTimer() // Initialiser le timer
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId)
+      events.forEach(event => window.removeEventListener(event, resetTimer))
+    }
+  }, [token]) // Se réactive à la connexion/déconnexion
+
   return (
     <div className="app-shell">
       <Navbar token={token} user={user} onLogout={handleLogout} />
