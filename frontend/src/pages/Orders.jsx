@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getUserOrders } from '../api'
-import './orders.css'
+import '../orders.css'
 
 function Orders({ token }) {
   const [orders, setOrders] = useState([])

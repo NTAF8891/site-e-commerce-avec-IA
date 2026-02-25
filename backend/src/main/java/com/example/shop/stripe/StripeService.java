@@ -44,6 +44,11 @@ public class StripeService {
                     .setAmount(amount)
                     .setCurrency(currency)
                     .putMetadata("orderId", String.valueOf(order.getId()))
+                    .setAutomaticPaymentMethods(
+                        PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
+                            .setEnabled(true)
+                            .build()
+                    )
                     .build();
             PaymentIntent pi = PaymentIntent.create(params);
             order.setStripePaymentIntentId(pi.getId());
