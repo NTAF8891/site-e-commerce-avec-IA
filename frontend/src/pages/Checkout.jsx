@@ -229,7 +229,7 @@ export default function Checkout({ token }) {
         setClientSecret(res.clientSecret)
       } catch (e) {
         console.error("Erreur checkout:", e)
-        setMessage('Erreur lors de l\'initialisation du paiement. Veuillez réessayer.')
+        setMessage(e.message || 'Erreur lors de l\'initialisation du paiement. Veuillez réessayer.')
       }
     }
     init()

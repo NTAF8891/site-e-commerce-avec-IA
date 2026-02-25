@@ -38,6 +38,7 @@ export default function Cart() {
                   <input
                     type="number"
                     min="1"
+                    max={i.product.stock}
                     value={i.quantity}
                     onChange={e => updateQuantity(i.product.id, Number(e.target.value))}
                     className="field-input"

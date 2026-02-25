@@ -34,6 +34,9 @@ public class OrderService {
         double total = 0d;
         for (Item it : items) {
             Product p = productRepository.findById(it.productId).orElseThrow();
+            if (p.getStock() < it.quantity) {
+                throw new IllegalArgumentException("Stock insuffisant pour le produit: " + p.getName());
+            }
             OrderItem oi = new OrderItem();
             oi.setOrder(order);
             oi.setProduct(p);
